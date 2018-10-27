@@ -1,6 +1,7 @@
 package com.imobiliaria.tabajara;
 
-public class List {
+public class ClientList {
+
     private String number;
     private String name;
     private String cpf;
@@ -14,9 +15,7 @@ public class List {
     private String phone;
     private double balance;
 
-    public List(String number, String name, String cpf, char sex, String birthday, String address, String email, String complement,
-                  String city, String uf, String phone, double balance) {
-
+    public ClientList(String number, String name, String cpf, char sex, String birthday, String email, String address, String complement, String city, String uf, String phone, double balance) {
         this.number = number;
         this.name = name;
         this.cpf = cpf;
@@ -30,8 +29,6 @@ public class List {
         this.phone = phone;
         this.balance = balance;
     }
-
-
 
     public String getNumber() {
         return number;
@@ -105,11 +102,11 @@ public class List {
         this.city = city;
     }
 
-    public String getUF() {
+    public String getUf() {
         return uf;
     }
 
-    public void setUF(String uf) {
+    public void setUf(String uf) {
         this.uf = uf;
     }
 
@@ -128,5 +125,4 @@ public class List {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
 }

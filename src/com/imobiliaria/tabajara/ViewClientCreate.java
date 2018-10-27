@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUI extends JFrame implements ActionListener {
+public class ViewClientCreate extends JFrame implements ActionListener {
 
     private  JTextField text_code,
                         text_area,
@@ -30,15 +30,17 @@ public class GUI extends JFrame implements ActionListener {
 
     private static final int VPAG = 15;
 
-    public GUI(String title){
+    public ViewClientCreate(String title){
 
         super(title);
 
         JPanel panel        = new JPanel( new BorderLayout() );
 
         this.panelHeader    = new JPanel( new GridLayout(2,1) );
-        this.panelSection   = new JPanel( new FlowLayout(FlowLayout.LEFT, HPAG, VPAG) );
+        this.panelSection   = new JPanel( new FlowLayout( FlowLayout.LEFT, HPAG, VPAG) );
         this.panelFooter    = new JPanel( new FlowLayout() );
+
+        JTabbedPane jtpTabs = new JTabbedPane();
 
         this.setPanelHeader();
         this.setPanelSection();
@@ -64,7 +66,7 @@ public class GUI extends JFrame implements ActionListener {
         //Configuração do subtítulo do cabeçalho
         JLabel subTextHeader = new JLabel("Seu imóvel está aqui");
         subTextHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        subTextHeader.setForeground(Color.RED);
+        subTextHeader.setForeground(Color.getColor("255,255,255"));
         this.panelHeader.add(subTextHeader, BorderLayout.NORTH);
     }
 
