@@ -1,28 +1,37 @@
 package com.imobiliaria.tabajara;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.ArrayList;
+
 
 public class ViewClientCreate extends JFrame implements ActionListener {
 
-    private  JTextField text_code,
-                        text_area,
-                        text_garages,
-                        text_typeImmobile,
-                        text_countRoom,
-                        text_price,
-                        text_countBathroom;
+    private  JTextField txt_code,
+					    txt_name,         
+					    txt_email,
+					    txt_address,
+					    txt_complement,
+					    txt_city,
+					    txt_balance;
 
-    private JButton btn_previous,
-                    btn_next,
-                    btn_last,
-                    btn_first;
+    private JFormattedTextField txt_cpf, 
+    							txt_birthday,
+    							txt_phone;
+
+    private JButton btn_add,
+                    btn_search;
 
     private JPanel panelHeader,
-                    panelSection,
-                    panelFooter;
+                    panelSectionAdd,
+                    panelSectionShow,
+                    panelSectionSearch;
+
 
     private static final int SIZECOLUMN = 12;
 
@@ -36,19 +45,24 @@ public class ViewClientCreate extends JFrame implements ActionListener {
 
         JPanel panel        = new JPanel( new BorderLayout() );
 
-        this.panelHeader    = new JPanel( new GridLayout(2,1) );
-        this.panelSection   = new JPanel( new FlowLayout( FlowLayout.LEFT, HPAG, VPAG) );
-        this.panelFooter    = new JPanel( new FlowLayout() );
+        this.panelHeader        = new JPanel( new GridLayout(2,1) );
+        this.panelSectionAdd    = new JPanel( new FlowLayout( FlowLayout.LEFT, HPAG, VPAG) );
+        this.panelSectionShow   = new JPanel( new FlowLayout( FlowLayout.LEFT, HPAG, VPAG) );
+        this.panelSectionSearch = new JPanel( new FlowLayout( FlowLayout.LEFT, HPAG, VPAG) );
 
-        JTabbedPane jtpTabs = new JTabbedPane();
-
+        JTabbedPane panelTabs = new JTabbedPane();
+        panelTabs.setBounds(50,50,200,200);
+        
         this.setPanelHeader();
-        this.setPanelSection();
-        this.setPanelFooter();
+        this.setPanelSectionAdd();
+        this.setPanelSectionSearch();
+        
+        panelTabs.add("Adicionar", this.panelSectionAdd);
+        panelTabs.add("Procurar", this.panelSectionSearch);
+        panelTabs.add("Mostrar", this.panelSectionShow);
 
         panel.add(panelHeader, BorderLayout.NORTH);
-        panel.add(panelSection, BorderLayout.CENTER);
-        panel.add(panelFooter, BorderLayout.SOUTH);
+        panel.add(panelTabs, BorderLayout.CENTER);
 
         getContentPane().add(panel);
 
@@ -56,97 +70,151 @@ public class ViewClientCreate extends JFrame implements ActionListener {
 
     private void setPanelHeader(){
 
-        //Configuração do título do cabeçalho
-        JLabel textHeader = new JLabel("Imobiliária Tabajara \n");
+        //Configura��o do t�tulo do cabe�alho
+        JLabel textHeader = new JLabel( this.getTitle() + "\n");
         textHeader.setHorizontalAlignment(SwingConstants.CENTER);
         textHeader.setFont( new Font("Arial", Font.BOLD, 36) );
         textHeader.setForeground(Color.RED);
         this.panelHeader.add(textHeader, BorderLayout.NORTH);
 
-        //Configuração do subtítulo do cabeçalho
-        JLabel subTextHeader = new JLabel("Seu imóvel está aqui");
+        //Configura��o do subt�tulo do cabe�alho
+        JLabel subTextHeader = new JLabel("Talvez seu dinheiro esteja aqui");
         subTextHeader.setHorizontalAlignment(SwingConstants.CENTER);
         subTextHeader.setForeground(Color.getColor("255,255,255"));
         this.panelHeader.add(subTextHeader, BorderLayout.NORTH);
     }
 
-    private void setPanelSection(){
+    private void setPanelSectionAdd(){
 
-        this.text_code          = new JTextField(SIZECOLUMN / 2);
-        this.text_area          = new JTextField( SIZECOLUMN );
-        this.text_garages       = new JTextField(SIZECOLUMN / 2);
-        this.text_typeImmobile  = new JTextField( SIZECOLUMN );
-        this.text_countRoom     = new JTextField(SIZECOLUMN / 2);
-        this.text_price         = new JTextField( SIZECOLUMN );
-        this.text_countBathroom = new JTextField(SIZECOLUMN / 2);
+    	//Cria e adiciona campo c�digo
+    	JLabel lbl_code         = new JLabel(" C�digo");
+        this.txt_code           = new JTextField(SIZECOLUMN);
+        this.panelSectionAdd.add(lbl_code);
+        this.panelSectionAdd.add(this.txt_code);
 
-        JLabel lbl_code          = new JLabel(" Código");
-        JLabel lbl_area          = new JLabel(" Área");
-        JLabel lbl_garages       = new JLabel(" Garagens");
-        JLabel typeImmobile      = new JLabel(" Tipo do Móvel");
-        JLabel lbl_countRoom     = new JLabel(" Nº de Quartos");
-        JLabel lbl_price         = new JLabel(" Preço do Imóvel");
-        JLabel lbl_countBathroom = new JLabel(" Nº de Banheiros");
+        //Cria e adiciona campo nome
+        JLabel lbl_name         = new JLabel(" Nome");
+	    this.txt_name 			= new JTextField(SIZECOLUMN);
+        this.panelSectionAdd.add(lbl_name);
+        this.panelSectionAdd.add(this.txt_name);
 
-        panelSection.add(lbl_code);
-        panelSection.add(this.text_code);
+        //Cria e adiciona CPF
+	    JLabel lbl_cpf       	= new JLabel(" CPF");
+	    try{
+		    MaskFormatter  maskCPF = new MaskFormatter("###.###.###-##");
+		    this.txt_cpf = new JFormattedTextField(maskCPF);
+		    this.txt_cpf.setColumns(SIZECOLUMN);
+	    }catch(ParseException e) {
+	        System.out.println(e);
+	    }
+        this.panelSectionAdd.add(lbl_cpf);
+        this.panelSectionAdd.add(this.txt_cpf);
 
-        panelSection.add(typeImmobile);
-        panelSection.add(this.text_typeImmobile);
+        //Cria e adiciona campo sexo
+	    JLabel lbl_sex			= new JLabel(" Sexo");
+        ButtonGroup groupSex 	= new ButtonGroup();
+        JRadioButton male		= new JRadioButton("Masculino", true);
+        JRadioButton female		= new JRadioButton("Feminio", false);
+	    groupSex.add(male);
+	    groupSex.add(female);
+        this.panelSectionAdd.add(lbl_sex);
+        this.panelSectionAdd.add(female);
+        this.panelSectionAdd.add(male);
 
-        panelSection.add(lbl_area);
-        panelSection.add(this.text_area);
+        //Cria e adiciona campo e-mail
+	    JLabel lbl_email        = new JLabel(" E-mail");
+	    this.txt_email 			= new JTextField(SIZECOLUMN);
+        this.panelSectionAdd.add(lbl_email);
+        this.panelSectionAdd.add(this.txt_email);
 
-        panelSection.add(lbl_garages);
-        panelSection.add(this.text_garages);
+        //Cria e adiciona campo data de nascimento
+        JLabel lbl_birthday     = new JLabel(" Data de Nascimento");
+	    try{
+		    MaskFormatter  maskBirthday	= new MaskFormatter("##/##/####");
+		    this.txt_birthday = new JFormattedTextField(maskBirthday);
+		    this.txt_birthday.setColumns(SIZECOLUMN / 2);
+	    }catch(ParseException e) {
+	        System.out.println(e);
+	    }
+        this.panelSectionAdd.add(lbl_birthday);
+        this.panelSectionAdd.add(this.txt_birthday);
 
-        panelSection.add(lbl_countRoom);
-        panelSection.add(this.text_countRoom);
+        //Cria e adiciona campo endere�o
+        JLabel lbl_address     	= new JLabel(" Endere�o");
+        this.txt_address		= new JTextField(SIZECOLUMN * 2);
+        this.panelSectionAdd.add(lbl_address);
+        this.panelSectionAdd.add(this.txt_address);
 
-        panelSection.add(lbl_countBathroom);
-        panelSection.add(this.text_countBathroom);
+        //Cria e adiciona campo complemento
+        JLabel lbl_complement 	= new JLabel(" Complemento");
+	    this.txt_complement		= new JTextField(SIZECOLUMN);
+        this.panelSectionAdd.add(lbl_complement);
+        this.panelSectionAdd.add(this.txt_complement);
 
-        panelSection.add(lbl_price);
-        panelSection.add(this.text_price);
+        //Cria e adiciona campo cidade
+	    JLabel lbl_city 		= new JLabel(" Cidade");
+	    this.txt_city			= new JTextField(SIZECOLUMN);
+        this.panelSectionAdd.add(lbl_city);
+        this.panelSectionAdd.add(this.txt_city);
+
+        //Cria e adiciona campo UF
+	    JLabel lbl_uf 			= new JLabel(" Estado");
+	    JComboBox comboStates   = new JComboBox();
+        for (States value : States.values()) {
+	    	comboStates.addItem( value.getName() );
+        }
+        this.panelSectionAdd.add(lbl_uf);
+        this.panelSectionAdd.add(comboStates);
+
+        //Cria e adiciona campo telefone
+        JLabel lbl_phone 		= new JLabel(" Telefone");
+	    try{
+		    MaskFormatter  maskPhone	= new MaskFormatter("(##)####-####");
+		    this.txt_phone = new JFormattedTextField(maskPhone);
+		    this.txt_phone.setColumns(SIZECOLUMN);
+	    }catch(ParseException e) {
+	        System.out.println(e);
+	    }
+        this.panelSectionAdd.add(lbl_phone);
+        this.panelSectionAdd.add(this.txt_phone);
+
+        //Cria e adiciona campo saldo
+	    JLabel lbl_balance 		= new JLabel(" Saldo(R$)");
+	    this.txt_balance		= new JTextField(SIZECOLUMN);
+        this.panelSectionAdd.add(lbl_balance);
+        this.panelSectionAdd.add(this.txt_balance);
+
+
+        this.btn_add      = new JButton("Cadastrar");
+        this.panelSectionAdd.add(this.btn_add);
+        this.btn_add.addActionListener(this);
     }
 
-    private void setPanelFooter(){
+    private void setPanelSectionSearch(){
 
-        this.btn_first      = new JButton("Primeiro");
-        this.btn_last       = new JButton("Último");
-        this.btn_previous   = new JButton("Anterior");
-        this.btn_next       = new JButton("Próximo");
+        JLabel lbl_search = new JLabel("Pesquisar");
+        PlaceholderTextField txt_search = new PlaceholderTextField( SIZECOLUMN  + 5);
+        txt_search.setPlaceholder("Digite o c�digo do cliente");
 
-        this.panelFooter.add(this.btn_last);
-        this.panelFooter.add(this.btn_previous);
-        this.panelFooter.add(this.btn_next);
-        this.panelFooter.add(this.btn_first);
+        this.btn_search = new JButton("procurar");
 
-        this.btn_last.addActionListener(this);
-        this.btn_previous.addActionListener(this);
-        this.btn_next.addActionListener(this);
-        this.btn_first.addActionListener(this);
 
+        this.panelSectionSearch.add(lbl_search);
+        this.panelSectionSearch.add(txt_search);
+        this.panelSectionSearch.add(this.btn_search);
+        this.btn_search.addActionListener(this);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == this.btn_first){
-            System.out.println("Primeiro");
+        if(e.getSource() == this.btn_add){
+            System.out.println("Adicionar");
         }
 
-        if(e.getSource() == this.btn_last){
-            System.out.println("Ùltimo");
-        }
-
-        if(e.getSource() == this.btn_previous){
-            System.out.println("Anterior");
-        }
-
-        if(e.getSource() == this.btn_next){
-            System.out.println("Próximo");
+        if(e.getSource() == this.btn_search){
+            System.out.println("Procurar");
         }
 
     }
