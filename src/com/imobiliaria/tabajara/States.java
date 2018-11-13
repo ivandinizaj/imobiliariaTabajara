@@ -36,7 +36,19 @@ public enum States {
 		this.uf = uf;
 		this.name = name;
 	}
-	
+
+
+	public static String[] search(String s){
+
+		for(States value : States.values() ){
+			if(value.getUF().equalsIgnoreCase(s) || value.getName().equalsIgnoreCase(s) ){
+				return new String[] {value.getUF(), value.getName() };
+			}
+		}
+
+		return null;
+	}
+
 	public String getUF() {
 		return uf;
 	}

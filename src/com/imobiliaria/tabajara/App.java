@@ -6,9 +6,9 @@ public class App {
 
     public static void main(String[] args) {
 
-        ViewClientCreate gui = new ViewClientCreate("Tabajara Bank");
+        ViewClient gui = new ViewClient("Tabajara Bank");
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gui.setSize(400, 500);
+        gui.setSize(480, 750);
         gui.setVisible(true);
 
     }

@@ -1,6 +1,6 @@
 package com.imobiliaria.tabajara;
 
-public class ClientList {
+public class Client {
 
     private String number;
     private String name;
@@ -15,7 +15,7 @@ public class ClientList {
     private String phone;
     private double balance;
 
-    public ClientList(String number, String name, String cpf, char sex, String birthday, String email, String address, String complement, String city, String uf, String phone, double balance) {
+    public Client(String number, String name, String cpf, char sex, String birthday, String email, String address, String complement, String city, String uf, String phone, double balance) {
         this.number = number;
         this.name = name;
         this.cpf = cpf;

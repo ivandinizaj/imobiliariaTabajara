@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class ClientRepository implements Repository{
 
-    private ClientList[] clientList;
+    private Client[] clientList;
 
     private int index;
 
     public ClientRepository(int tam) {
-        this.clientList = new ClientList[tam];
+        this.clientList = new Client[tam];
         this.index = 0;
     }
 
@@ -37,9 +37,9 @@ public class ClientRepository implements Repository{
      * @param s termo a ser buscado
      * @return Array de Clients encontrados
      */
-    public ClientList[] searchItem(String s) {
+    public Client[] searchItem(String s) {
 
-        ArrayList<ClientList> itens = new ArrayList<ClientList>();
+        ArrayList<Client> itens = new ArrayList<Client>();
 
         for (int i = 0; i < index; i++) {
             if ( this.clientList[i].getNumber().equals(s) || this.clientList[i].getCPF().equals(s) || this.clientList[i].getName().equals(s) )
@@ -47,7 +47,7 @@ public class ClientRepository implements Repository{
         }
 
         //Converte ArrayList em vetor
-        return (ClientList[])itens.toArray(new ClientList[itens.size()]);
+        return (Client[])itens.toArray(new Client[itens.size()]);
     }
 
     /**
@@ -55,16 +55,17 @@ public class ClientRepository implements Repository{
      *
      * @return Client[]
      */
-    public ClientList[] getItems() {
-
-        ClientList[] itens = new ClientList[index];
+    public Client[] getItems() {
 
         if (index > 0) {
 
-            for (int i = 0; i < index; i++)
-                itens[i] = this.clientList[i];
+            Client[] items = new Client[index];
 
-            return itens;
+            for (int i = 0; i < index; i++)
+                items[i] = this.clientList[i];
+
+            return items;
+
         }
 
         return null;
@@ -78,9 +79,9 @@ public class ClientRepository implements Repository{
      * @return != null - retorna o objeto do cliente encontrado
      */
     @Override
-    public ClientList search(String s) {
+    public Client search(String s) {
 
-        ClientList item = null;
+        Client item = null;
 
         int id = this.searchIndex(s);
 
@@ -98,7 +99,7 @@ public class ClientRepository implements Repository{
      * @param item
      */
     @Override
-    public void add(ClientList item) {
+    public void add(Client item) {
 
         if (index < this.clientList.length) {
 
@@ -122,7 +123,7 @@ public class ClientRepository implements Repository{
      * @param item
      */
     @Override
-    public void update(ClientList item) {
+    public void update(Client item) {
 
         int id = this.searchIndex(item.getNumber());
 
@@ -132,8 +133,9 @@ public class ClientRepository implements Repository{
             throw new NullPointerException("update | item inválido");
     }
 
+
     @Override
-    public ClientList get(int id) {
+    public Client get(int id) {
         return null;
     }
 
@@ -154,14 +156,6 @@ public class ClientRepository implements Repository{
         }else
             throw new NullPointerException("remove | item inválido");
 
-    }
-
-    private boolean overflow(){
-        return true;
-    }
-
-    private boolean underflow(){
-        return true;
     }
 
     public boolean exist(String index) {

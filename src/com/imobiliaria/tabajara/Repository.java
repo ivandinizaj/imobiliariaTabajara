@@ -2,13 +2,13 @@ package com.imobiliaria.tabajara;
 
 public interface Repository {
 
-    void add(ClientList item);
+    void add(Client item);
 
-    void update(ClientList item);
+    void update(Client item);
 
-    ClientList get(int id);
+    Client get(int id);
 
-    ClientList search(String s);
+    Client search(String s);
 
     void remove(String number);
 }
